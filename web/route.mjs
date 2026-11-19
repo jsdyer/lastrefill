@@ -70,7 +70,10 @@ export function analyze(tracks, data, radius, filter) {
         if (offset>radius || !parts.some(s=>s.covered && t>=s.from && t<=s.to)) continue;
         const candidate={facility,track,at:total+t*length,offset};
         const prev=active.get(idx);
-        next.set(idx,prev && prev.offset<=offset ? prev : candidate);
+        // Two adjacent long segments can pass the same fountain on opposite legs.
+        const continued=prev && distance(p,a)<=radius && parts[0].covered;
+        if (prev && !continued) visits.push(prev);
+        next.set(idx,continued && prev.offset<=offset ? prev : candidate);
       }
       for (const [idx,v] of active) if (!next.has(idx)) visits.push(v);
       active=next;

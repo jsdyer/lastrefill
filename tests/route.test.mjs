@@ -26,3 +26,9 @@ test('Return passes count separately and washrooms do not break refill gaps',()=
  assert.equal(r.visits.filter(v=>v.facility.kind==='Fountain').length,2);
  assert.ok(r.longest.to-r.longest.from>80000);
 });
+
+test('An out-and-back with sparse GPX vertices visits the same fountain twice',()=>{
+ const d={...rect,facilities:[{xy:[.4,1],kind:'Fountain',name:'Return point',season:'year-round'}]};
+ const r=analyze([[[.2,1],[.8,1],[.2,1]]],d,100,'all');
+ assert.equal(r.visits.length,2);assert.ok(r.visits[1].at>r.visits[0].at);
+});

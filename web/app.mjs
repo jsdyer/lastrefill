@@ -1,8 +1,8 @@
 const $=id=>document.getElementById(id);
 const km=m=>(m/1000).toFixed(2);
 const node=(tag,text,css)=>{const e=document.createElement(tag); if(text!=null)e.textContent=text; if(css)e.className=css; return e;};
-let data,tracks,title,worker,last;
-function reset(){tracks=[data.route];title='English Bay to Second Beach';$('file').value='';$('error').textContent='';calculate();}
+let data,tracks,title,worker,last,fileSelection=0;
+function reset(){fileSelection++;tracks=[data.route];title='English Bay to Second Beach';$('file').value='';$('error').textContent='';calculate();}
 function calculate(){
   if(!data)return;
   worker?.terminate();
@@ -49,7 +49,7 @@ function readGPX(xml){
   if(groups.reduce((n,g)=>n+g.length,0)>50000)throw Error('Choose a GPX with at most 50,000 points.');
   return groups;
 }
-$('file').onchange=async()=>{try{const f=$('file').files[0];if(!f)return;if(f.size>12*1024*1024)throw Error('Choose a GPX smaller than 12 MB.');tracks=readGPX(await f.text());title=f.name;$('error').textContent='';calculate();}catch(e){$('error').textContent=e.message;$('file').value='';}};
+$('file').onchange=async()=>{try{const selection=++fileSelection;const f=$('file').files[0];if(!f)return;if(f.size>12*1024*1024)throw Error('Choose a GPX smaller than 12 MB.');const xml=await f.text();if(selection!==fileSelection)return;tracks=readGPX(xml);title=f.name;$('error').textContent='';calculate();}catch(e){$('error').textContent=e.message;$('file').value='';}};
 $('example').onclick=()=>{if(data)reset();}; for(const id of ['radius','filter'])$(id).onchange=calculate;
 $('wash').onchange=()=>{if(last)draw();};
 try{
