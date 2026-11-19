@@ -2,7 +2,7 @@
   "id": "lastrefill",
   "title": "Last Refill",
   "description": "Find the longest gap between mapped drinking fountains on a private Vancouver GPX route.",
-  "category": "field-kit",
+  "category": "places",
   "tags": [
     "Vancouver",
     "water",

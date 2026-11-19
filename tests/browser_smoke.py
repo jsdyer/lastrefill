@@ -44,7 +44,7 @@ def main():
                 page.get_by_text('This track does not enter the City of Vancouver.').wait_for()
                 assert all(m=='GET' and '/example-tool/' in url for m,url in sent),sent
                 page.locator('#file').set_input_files(dict(name='bad.gpx', mimeType='application/gpx+xml', buffer=b'not xml'))
-                page.get_by_role('alert').get_by_text('Choose a valid GPX track or route.').wait_for()
+                page.get_by_text('Choose a valid GPX track or route.', exact=True).wait_for()
                 page.locator('#example').click()
                 page.get_by_text('English Bay to Second Beach',exact=True).wait_for()
                 page.screenshot(path=str(screenshots / "desktop.png"), full_page=True)
