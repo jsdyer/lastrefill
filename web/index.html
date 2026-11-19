@@ -1,33 +1,6 @@
-<!doctype html>
-<html lang="en-CA">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="{{DESCRIPTION}}">
-  <title>{{TITLE}} · CoolCode</title>
-  <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.mjs"></script>
-</head>
-<body data-tool-id="{{TOOL_ID}}">
-  <a class="skip" href="#main">Skip to content</a>
-  <header><a href="https://coolcode.ca/">← CoolCode.ca</a><a href="{{SOURCE_URL}}">Source &amp; instructions ↗</a></header>
-  <main id="main">
-    <p class="eyebrow">Browser tool starter</p>
-    <h1>{{TITLE}}</h1>
-    <p class="intro">{{DESCRIPTION}}</p>
-    <section aria-labelledby="example-title">
-      <h2 id="example-title">Clean a list</h2>
-      <p>Trim spaces, skip blank lines and remove exact duplicates. Capitalization stays distinct.</p>
-      <div class="panels">
-        <div><label for="input">Your lines</label><textarea id="input" rows="10" maxlength="100000" spellcheck="false" placeholder="Paste one item per line"></textarea></div>
-        <div><label for="output">Cleaned lines</label><textarea id="output" rows="10" readonly spellcheck="false"></textarea></div>
-      </div>
-      <div class="actions"><button id="sample" type="button">Load example</button><button id="clear" type="button">Clear</button><button id="copy" type="button" hidden>Copy result</button></div>
-      <p id="status" role="status" aria-live="polite">Paste a list to begin.</p>
-      <noscript><p>This tool needs JavaScript to process your text. The source is available above.</p></noscript>
-    </section>
-    <aside aria-label="Privacy"><strong>Stays on your device.</strong> This example makes no API requests and does not save your text. Reloading clears it.</aside>
-  </main>
-  <footer>Part of <a href="https://coolcode.ca/">the CoolCode collection</a>.</footer>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{{DESCRIPTION}}"><title>{{TITLE}} · CoolCode</title><link rel="stylesheet" href="./style.css"></head><body data-tool="{{TOOL_ID}}">
+<a href="#main" class="skip">Skip to route planner</a><nav><a href="https://coolcode.ca/">← CoolCode</a><span>Vancouver / Route planner</span></nav>
+<header><div><p class="eyebrow">Vancouver, British Columbia</p><h1>Last Refill</h1><p class="dek">Find the longest stretch of your route between mapped drinking fountains.</p></div><div class="stamp" aria-hidden="true">H₂O</div></header>
+<main id="main"><aside><h2>Your route</h2><label for="file">Open a local GPX</label><input id="file" type="file" accept=".gpx,application/gpx+xml"><p class="hint">Your track stays on this device. No upload or saved location history.</p><button id="example" type="button">Use the English Bay example</button><label for="radius">Search distance from route</label><select id="radius"><option value="50">50 metres</option><option value="100">100 metres</option><option selected value="200">200 metres</option><option value="500">500 metres</option></select><label for="filter">Fountains to count</label><select id="filter"><option value="year">Posted year-round only</option><option value="all">All mapped seasons</option></select><label class="check"><input type="checkbox" id="wash" checked> Show washrooms</label><p class="hint">Washrooms have their own posted hours and do not count as drinking-water stops.</p><p role="alert" id="error"></p></aside>
+<section aria-label="Route results"><div id="summary" role="status">Reading the city snapshot…</div><h2 id="routeName">English Bay to Second Beach</h2><div class="track" id="diagram"></div><div class="legend"><i></i> Fountain <i class="wc"></i> Washroom <i class="out"></i> Outside coverage</div><p class="hint" id="coverage"></p><h3>Stops in route order</h3><p class="hint">Kilometres follow your track. The offset is straight-line proximity. Gates, paths and crossings can make the actual detour longer or inaccessible.</p><div id="stops"></div></section></main>
+<footer><h2>Sources &amp; coverage</h2><p id="dates"></p><p>Municipal records cover City-managed facilities inside Vancouver. Places across the boundary, private facilities and undocumented refills may exist. Posted seasons and hours describe the usual schedule. Temporary closures are separate. The exports supply no live outage status.</p><p><a href="https://opendata.vancouver.ca/explore/dataset/drinking-fountains/">Drinking fountains</a> · <a href="https://opendata.vancouver.ca/explore/dataset/public-washrooms/">Public washrooms</a> · <a href="https://opendata.vancouver.ca/explore/dataset/bikeways/">Example bikeways</a> · <a href="https://opendata.vancouver.ca/explore/dataset/city-boundary/">City boundary</a> · <a href="https://vancouver.ca/parks-recreation-culture/stanley-park.aspx">Stanley Park notices</a></p><p>Contains information licensed under the <a href="https://opendata.vancouver.ca/pages/licence/">Open Government Licence – Vancouver</a>. <a href="{{SOURCE_URL}}">Source code</a></p></footer><script type="module" src="./app.mjs"></script></body></html>

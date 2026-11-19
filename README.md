@@ -1,115 +1,21 @@
-# CoolCode browser tool template
+# Last Refill
 
-A starting point for independent tools at `coolcode.ca/<repo>/`: a working local-text
-example, responsive UI, Python standard-library build, Node tests, PR checks and Pages
-publication. No npm install is needed.
-
-## Using the example
+[Open Last Refill](https://coolcode.ca/lastrefill/) to measure the longest stretch of a Vancouver route without a mapped municipal drinking fountain. The included 2 km example follows City bikeway centreline segments from English Bay to Second Beach. You can also open a local GPX.
 
 <!-- coolcode:guide -->
-The first occurrence of each trimmed line keeps its place. Compare the output with the original text before copying the result.
+On the English Bay ride, compare posted year-round fountains with all mapped seasons. The Second Beach pool-deck fountain appears in the second view. Open a GPX to see distances along your own track, washroom hours and the kilometres where Vancouver’s municipal coverage ends.
 <!-- /coolcode:guide -->
 
-For a real tool, replace this paragraph with one or two plain-text sentences
-about an example, a limit or how to interpret the results. Keep the source,
-coverage, refresh behaviour and a worked example in this README as appropriate.
-When updating a tool, revise any details its behaviour has changed and keep the
-homepage's shorter data-source sentence in `tool.json` accurate.
-The hub imports the marked note into the catalogue README.
+## Reading your route
 
-## One-time template setup
+The default counts fountains with explicit year-round operation. All mapped seasons also includes unknown seasons, so a stop in that view may be closed. City fountain data last changed in June 2022. The app shows each dataset's source date independently of its retrieval date. Washrooms show both summer and winter posted hours and reported wheelchair access. They do not count as refill stops. At English Bay Beach Park the usual winter bathhouse opening time is 10 a.m. The exports have no live closure status. [Stanley Park notices](https://vancouver.ca/parks-recreation-culture/stanley-park.aspx) and [park washroom listings](https://covapp.vancouver.ca/parkfinder/FindFacilityType.aspx?InFT=53) provide separate operating information.
 
-Enable **Settings → General → Template repository** here. This repository does not
-need Pages enabled: its workflow builds/tests but intentionally skips deployment.
-New copies also skip deployment until `scripts/init.py` sets the tool ID to match
-their repository name. This lets you create the repo before configuring Pages.
+GPX tracks and routes are processed in browser memory with no analytics, uploads or local storage. The app measures the geodesic length of each recorded segment and projects city points onto it in local metre coordinates. Search radii range from 50 to 500 metres. Offset measures straight-line proximity. A nearby point may require a longer detour or be inaccessible behind a gate or across a road. Use the table for the full information shown on the route strip.
 
-## Start a new tool
+Repeated passes can count when the track leaves and re-enters the search radius. Distances accumulate over recorded GPX segments, excluding the breaks between them. The City boundary partitions each segment at jurisdiction crossings. Gaps include the distance from the start of a covered stretch to its first refill, between refills, and from the last refill to the end. A covered stretch with no matching points counts in full. Outside portions do not contribute. GPX track points take precedence over route points. The size limit is 12 MB and 50,000 points.
 
-1. Select **Use this template → Create a new repository**, choose owner `jsdyer`,
-   a unique lowercase name such as `my-tool`, and public visibility.
-2. Clone the new repository. Use Python 3.12+ and Node 24+.
-3. Set the identity, using a slug that matches the repository name:
+## Sources and refresh
 
-```sh
-python3 scripts/init.py my-tool --title "My Tool" --description "Describe what this tool does."
-```
+Contains information licensed under the [Open Government Licence – Vancouver](https://opendata.vancouver.ca/pages/licence/). City of Vancouver sources: [drinking fountains](https://opendata.vancouver.ca/explore/dataset/drinking-fountains/), [public washrooms](https://opendata.vancouver.ca/explore/dataset/public-washrooms/), [city boundary](https://opendata.vancouver.ca/explore/dataset/city-boundary/) and [bikeways](https://opendata.vancouver.ca/explore/dataset/bikeways/). The sample comes from 16 connected, identified bikeway segments. It is a route illustration independent of temporary street and park closures.
 
-Review the category, tags and icon in `tool.json`. `access: "browser"` tells the main
-catalogue that the tool works immediately without installation. `--owner` supports a different
-GitHub owner, but only projects owned by `jsdyer` inherit the CoolCode domain.
-
-4. Replace the example in `web/` and its tests. Update the privacy explanation,
-   source attribution and README to describe the real tool.
-5. Test and preview:
-
-```sh
-node --test tests/*.test.mjs
-python3 -m unittest discover -s tests -v
-python3 scripts/build.py
-python3 -m http.server 8000 --directory dist
-```
-
-Open `http://localhost:8000/`. The example trims lines, skips blanks and removes exact
-duplicates, preserving first-seen order and capitalization. It makes no API requests
-and does not persist text. Update that explanation if your app behaves differently.
-
-CI also tests the browser flow and mobile layout at a project subpath. Replace the
-sample assertions in `tests/browser_smoke.py` when implementing your own UI. To run
-that check locally (optional for ordinary preview):
-
-```sh
-python3 -m venv .venv
-. .venv/bin/activate
-python3 -m pip install -r tests/browser-requirements.txt
-python3 -m playwright install --with-deps chromium
-python3 tests/browser_smoke.py
-```
-
-Playwright is a test-only dependency; the app and its static build do not use it.
-
-## Publish and register
-
-When the actual tool is ready, in the **new tool repository** set **Settings → Pages → Build and deployment →
-Source → GitHub Actions**. Push to `main`, or manually run **Browser tool · Check and
-publish** after enabling Pages. If the initial deployment ran before Pages was enabled,
-enable it and rerun. PRs only check/build and provide a downloadable preview artifact.
-
-Keep asset paths and module imports relative. Check `https://coolcode.ca/my-tool/`.
-Do not add a CNAME or set `coolcode.ca` as this project's custom domain; the account
-site supplies it. Only successful `main` builds deploy.
-
-After verifying the app, copy the reviewed object from `tool.json` into `data/tools.json`
-in [the main site](https://github.com/jsdyer/jsdyer.github.io). Each tool still builds
-independently. Update the hub record when listing metadata changes; the hub is the
-authority for discovery. Ordinary app updates touch only this repository.
-
-The main site separates **Use in your browser** from **Install yourself**. An app
-that asks for a file is still a browser tool. Standalone Linux packages should start
-in their own repositories with their own build/release workflow, rather than copying
-this browser-only scaffold. Their hub record uses `access: "install"`, links to an
-installation guide, and includes `requirements`.
-
-## Files
-
-| Path | Purpose |
-| --- | --- |
-| `tool.json` | Page metadata and a ready-to-copy catalogue record |
-| `web/` | HTML, responsive CSS, DOM interactions and separate model logic |
-| `scripts/build.py` | Escape metadata and build `web/` into `dist/` |
-| `scripts/init.py` | Set a new project's identity |
-| `tests/` | Application and builder tests |
-| `.github/workflows/pages.yml` | Check PRs and publish successful main builds |
-| `AGENTS.md` | Instructions for future coding work |
-
-Namespace optional storage as `coolcode:<tool-id>:<key>`; CoolCode paths share a
-browser origin. Don't save pasted text/uploads by default. Document external APIs
-and send only the information needed for the selected action. Never embed secrets.
-
-Scheduled refresh is opt-in. Validate source data before deploying, display its date,
-and preserve the last good deployment on failure. Public-repository schedules can
-stop after 60 days without repository activity.
-
-Templates don't propagate future edits automatically. Adopt fixes explicitly and
-consider a versioned reusable workflow once several tools confirm the shared process.
-Choose and add the intended software license before distributing a new project.
+The daily refresh downloads complete exports and validates their catalogue counts, boundary continuity and sample route connections before publishing. The site builds offline from the committed snapshot. Run `python3 scripts/refresh.py` to refresh, `node --test tests/*.test.mjs`, `python3 -m unittest discover -s tests`, and `python3 scripts/build.py`. The browser smoke check is `python3 tests/browser_smoke.py` with Chromium and the test dependencies installed.

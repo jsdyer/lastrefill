@@ -1,16 +1,66 @@
 {
-  "id": "coolcode-tool-template",
-  "title": "CoolCode Tool Starter",
-  "description": "A browser-only example that trims lines and removes exact duplicates.",
-  "category": "security",
-  "tags": ["text", "lines", "duplicates"],
-  "icon": "scan-search",
-  "url": "/coolcode-tool-template/",
-  "source": "https://github.com/jsdyer/coolcode-tool-template",
+  "id": "lastrefill",
+  "title": "Last Refill",
+  "description": "Find the longest gap between mapped drinking fountains on a private Vancouver GPX route.",
+  "category": "field-kit",
+  "tags": [
+    "Vancouver",
+    "water",
+    "GPX",
+    "cycling",
+    "washrooms"
+  ],
+  "icon": "route",
+  "url": "/lastrefill/",
+  "source": "https://github.com/jsdyer/lastrefill",
   "hosting": "project",
   "access": "browser",
   "data_info": {
-    "mode": "local",
-    "detail": "The browser reads the text you paste and compares its lines."
+    "mode": "mixed",
+    "detail": "City of Vancouver fountain, washroom, boundary and bikeway records are matched to a local route.",
+    "cadence": "Daily",
+    "probes": [
+      {
+        "label": "Data retrieved",
+        "url": "https://coolcode.ca/lastrefill/status.json",
+        "path": [
+          "retrieved"
+        ],
+        "count_at": {
+          "path": [
+            "count"
+          ],
+          "unit": "mapped facilities"
+        }
+      },
+      {
+        "label": "Fountain source update",
+        "url": "https://coolcode.ca/lastrefill/status.json",
+        "path": [
+          "dates",
+          "fountains"
+        ],
+        "count_at": {
+          "path": [
+            "fountains"
+          ],
+          "unit": "fountains"
+        }
+      },
+      {
+        "label": "Washroom source update",
+        "url": "https://coolcode.ca/lastrefill/status.json",
+        "path": [
+          "dates",
+          "washrooms"
+        ],
+        "count_at": {
+          "path": [
+            "washrooms"
+          ],
+          "unit": "washrooms"
+        }
+      }
+    ]
   }
 }
