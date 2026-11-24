@@ -19,3 +19,11 @@ Repeated passes can count when the track leaves and re-enters the search radius.
 Contains information licensed under the [Open Government Licence – Vancouver](https://opendata.vancouver.ca/pages/licence/). City of Vancouver sources: [drinking fountains](https://opendata.vancouver.ca/explore/dataset/drinking-fountains/), [public washrooms](https://opendata.vancouver.ca/explore/dataset/public-washrooms/), [city boundary](https://opendata.vancouver.ca/explore/dataset/city-boundary/) and [bikeways](https://opendata.vancouver.ca/explore/dataset/bikeways/). The sample comes from 16 connected, identified bikeway segments. It is a route illustration independent of temporary street and park closures.
 
 The daily refresh downloads complete exports and validates their catalogue counts, boundary continuity and sample route connections before publishing. The site builds offline from the committed snapshot. Run `python3 scripts/refresh.py` to refresh, `node --test tests/*.test.mjs`, `python3 -m unittest discover -s tests`, and `python3 scripts/build.py`. The browser smoke check is `python3 tests/browser_smoke.py` with Chromium and the test dependencies installed.
+
+<!-- schedule-reliability -->
+## Schedule reliability
+
+Public GitHub repositories can have scheduled workflows disabled after 60 days of inactivity. A separate weekly [schedule guard](.github/workflows/schedule-guard.yml) calls GitHub's enable-workflow API for an explicit list of refresh workflows and itself. It can restore workflows disabled for inactivity, preserves manually disabled workflows, and runs independently of collection failures.
+
+This is an interim mitigation, not a scheduling guarantee: GitHub does not document active-workflow renewal as a permanent exemption, and scheduled runs can be delayed or dropped. A scheduler on our own Linux server is the planned independent trigger. The guard does not collect data, create dummy commits, or change source/check timestamps; successful collection and published data freshness still need monitoring.
+<!-- /schedule-reliability -->
